@@ -9,13 +9,14 @@ eyeDetect = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
 
 while True:
     ret, frame = video.read()
-    frame = cv2.resize(frame, (350, 350))  
+    frame = cv2.resize(frame, (500, 500))  
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = faceDetect.detectMultiScale(frame, 1.3,5)
-    for (x, y, w, h) in faces:
+    for i,(x, y, w, h) in enumerate(faces,start=1):
         x1,y1 = x + w, y + h
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 1)  # Draw rectangle around detected face
-        cv2.putText(frame, "Face", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)  # Label the face
+
+        cv2.putText(frame, f"Face {i}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)  # Label the face
        
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
